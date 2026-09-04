@@ -293,7 +293,7 @@ class PdfReceiptService {
                   ),
                   pw.BarcodeWidget(
                     barcode: pw.Barcode.qrCode(),
-                    data: '${token.tokenCode} | SYED SADIQ POLY CLINIC | ${token.patientName} | Token #${token.tokenNumber}',
+                    data: 'https://syedsadiqpolyclinic.vercel.app/',
                     height: 38,
                     width: 38,
                   ),

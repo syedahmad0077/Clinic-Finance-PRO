@@ -54945,11 +54945,10 @@ j=A.abb(new A.wH(j,j,j,j),A.aSO(16),n)
 s=t.n_
 j=A.Dg(A.xe(A.b([A.dm("SYED SADIQ POLY CLINIC",A.fW(n,B.bJ,n,n,n,n,n,n,n,B.bk,n,n,13,n,B.bm,n,!0,n,n,n,n),B.cm),new A.dV(n,2,n),A.dm("Muhallah Doake, G.T. Road, Muridke (Syed Sadiq Ali Shah Road)",B.aUa,B.cm),A.dm("Ph: +92 300 4915255",A.fW(n,B.bJ,n,n,n,n,n,n,n,B.bk,n,n,8,n,B.bm,n,!0,n,n,n,n),B.cm)],s),B.cS),n,j,n,n,B.V6,1/0)
 r=m.c
-q=m.d
-p=A.v_(A.b([A.aNR(A.aSL(),r,!1,22,120),A.aNR(new A.aaI(n,B.ON),r+" | SYED SADIQ POLY CLINIC | "+q+" | Token #"+l,!0,38,38)],s),B.cS,B.aKT)
-q=A.dm(q.toUpperCase(),A.fW(n,B.bJ,n,n,n,n,n,n,n,B.bk,n,n,13,n,B.bm,n,!0,n,n,n,n),B.cm)
+q=A.v_(A.b([A.aNR(A.aSL(),r,!1,22,120),A.aNR(new A.aaI(n,B.ON),"https://syedsadiqpolyclinic.vercel.app/",!0,38,38)],s),B.cS,B.aKT)
+p=A.dm(m.d.toUpperCase(),A.fW(n,B.bJ,n,n,n,n,n,n,n,B.bk,n,n,13,n,B.bm,n,!0,n,n,n,n),B.cm)
 o=m.e
-k=A.b([k,new A.dV(n,4,n),j,new A.dV(n,6,n),p,new A.dV(n,6,n),q,A.dm((o>0?""+o+" Years":"Adult")+" / "+m.f,B.jR,B.cm)],s)
+k=A.b([k,new A.dV(n,4,n),j,new A.dV(n,6,n),q,new A.dV(n,6,n),p,A.dm((o>0?""+o+" Years":"Adult")+" / "+m.f,B.jR,B.cm)],s)
 j=m.r
 if(j.length!==0&&j.toLowerCase()!=="null")k.push(A.dm("Mobile: "+j,B.jR,B.cm))
 k.push(A.dm("Syed Sadiq Clinic",B.jR,B.cm))
