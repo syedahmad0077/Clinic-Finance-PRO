@@ -1,19 +1,58 @@
 @echo off
-title SYED SADIQ POLY CLINIC & HOSPITAL - SOFTWARE LAUNCHER
+setlocal enabledelayedexpansion
+title "SYED SADIQ POLY CLINIC & HOSPITAL MANAGEMENT SYSTEM"
 color 0A
 cls
+
 echo =======================================================================
 echo     SYED SADIQ POLY CLINIC & HOSPITAL MANAGEMENT SYSTEM (OFFLINE)
 echo =======================================================================
 echo.
-echo [1/2] Starting Offline Local Server for Windows 7 / 8 / 10 / 11...
-echo [2/2] Opening Web Browser...
-echo.
-echo IMPORTANT: Keep this window open while using the software.
-echo You can minimize this window to the taskbar.
+echo Launching Clinic Software in Google Chrome...
+echo Please wait a moment...
 echo.
 
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$PSScriptRoot = '%~dp0'.TrimEnd('\'); $port=8080; $listener = New-Object System.Net.HttpListener; $listener.Prefixes.Add('http://localhost:' + $port + '/'); try { $listener.Start() } catch { $port=8089; $listener = New-Object System.Net.HttpListener; $listener.Prefixes.Add('http://localhost:' + $port + '/'); $listener.Start() }; Write-Host ('[SUCCESS] Software Server active on http://localhost:' + $port); Start-Process ('http://localhost:' + $port + '/'); while ($listener.IsListening) { try { $context = $listener.GetContext(); $req = $context.Request; $res = $context.Response; $path = $req.Url.LocalPath; if ($path -eq '/' -or [string]::IsNullOrWhiteSpace($path)) { $path = '/index.html' }; $filePath = [System.IO.Path]::Combine($PSScriptRoot, $path.TrimStart('/').Replace('/', [System.IO.Path]::DirectorySeparatorChar)); if ([System.IO.File]::Exists($filePath)) { $bytes = [System.IO.File]::ReadAllBytes($filePath); $ext = [System.IO.Path]::GetExtension($filePath).ToLower(); switch ($ext) { '.html' { $res.ContentType = 'text/html; charset=utf-8' } '.js' { $res.ContentType = 'application/javascript' } '.css' { $res.ContentType = 'text/css' } '.json' { $res.ContentType = 'application/json' } '.png' { $res.ContentType = 'image/png' } '.otf' { $res.ContentType = 'font/otf' } '.ttf' { $res.ContentType = 'font/ttf' } '.wasm' { $res.ContentType = 'application/wasm' } default { $res.ContentType = 'application/octet-stream' } }; $res.ContentLength64 = $bytes.Length; $res.OutputStream.Write($bytes, 0, $bytes.Length) } else { $res.StatusCode = 404 }; $res.OutputStream.Close() } catch {} }"
+set "APP_DIR=%~dp0"
+set "INDEX_FILE=%APP_DIR%index.html"
 
-pause
+rem 1. Check standard Windows Chrome installation paths
+set "CHROME_PATH="
 
+if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" (
+    set "CHROME_PATH=%ProgramFiles%\Google\Chrome\Application\chrome.exe"
+) else if exist "%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe" (
+    set "CHROME_PATH=%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe"
+) else if exist "%LocalAppData%\Google\Chrome\Application\chrome.exe" (
+    set "CHROME_PATH=%LocalAppData%\Google\Chrome\Application\chrome.exe"
+) else if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
+    set "CHROME_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe"
+) else if exist "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" (
+    set "CHROME_PATH=C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+)
+
+if defined CHROME_PATH (
+    echo [SUCCESS] Found Google Chrome. Opening Software...
+    start "" "!CHROME_PATH!" --allow-file-access-from-files --disable-web-security --user-data-dir="%TEMP%\ClinicAppChrome" "%INDEX_FILE%"
+    exit /b 0
+)
+
+rem 2. Try 'chrome' command if registered in PATH
+where chrome >nul 2>&1
+if %errorlevel% equ 0 (
+    echo [SUCCESS] Opening Software in Google Chrome...
+    start "" chrome --allow-file-access-from-files --disable-web-security --user-data-dir="%TEMP%\ClinicAppChrome" "%INDEX_FILE%"
+    exit /b 0
+)
+
+rem 3. Try MS Edge / Firefox if Chrome is not found
+where msedge >nul 2>&1
+if %errorlevel% equ 0 (
+    echo [SUCCESS] Opening Software in Microsoft Edge...
+    start "" msedge --allow-file-access-from-files "%INDEX_FILE%"
+    exit /b 0
+)
+
+rem 4. Fallback to default browser
+echo [NOTICE] Opening Software...
+start "" "%INDEX_FILE%"
+exit /b 0
